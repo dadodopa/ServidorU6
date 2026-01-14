@@ -36,8 +36,9 @@ class ConexionBD
         $conexion->close();
     }
 
-    public function getSueldoMayor($valor)
-    {
+    public function getSueldoMayor($valor){
+
+        
         $conexionEstablecida = $this->abrir();
         $sql = "SELECT nombre, sueldo FROM empleados 
                 WHERE sueldo > $valor";

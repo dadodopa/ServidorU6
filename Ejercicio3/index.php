@@ -75,7 +75,7 @@ class ConexionBD
         $conexionEstablecida = $this->abrir();
         $sentecia=$conexionEstablecida->prepare("DELETE FROM empleados
         WHERE dni = ?");
-        $sentecia->bind_param("s",$dni);
+        $sentecia->bind_param("s", $dni);
         $sentecia->execute();
         if ($sentecia->affected_rows>0) {
             echo "Se ha eliminado correctamente el empleado con DNI $dni";
