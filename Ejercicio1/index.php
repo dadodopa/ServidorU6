@@ -17,6 +17,7 @@ class ConexionBD
 
     public function abrir()
     {
+        mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
         try {
             $conexion = new mysqli();
             $conexion->connect(
@@ -25,22 +26,9 @@ class ConexionBD
                 $this->password,
                 $this->baseDatos
             );
-
-            if ($conexion->connect_error) {
-                die("Error de conexión: " . $conexion->connect_error);
-            }
-
-            
-        } catch (mysqli_sql_exception $e) {
-            echo "ERROR:" . $e->getMessage();
-            echo "El objeto conexión existe! Aún cuando se ha producido un error:";
-            echo "<br>es objeto" . is_object($conexion);
-            echo "<br>clase: " . get_class($conexion);
-            echo "<br>conexion_error:" . $conexion->connect_errno;
-        } catch (Exception $e) {
-            echo "ERROR DESCONOCIDO: " . $e->getMessage();
-        } finally{
             return $conexion;
+        } catch (mysqli_sql_exception $e) {
+            throw new Exception("Error de conexión: " . $e->getMessage());
         }
     }
 
@@ -57,8 +45,10 @@ $pruebaConexion = new ConexionBD(
     "abc123.",
     "localhost"
 );
-
-$conexionEstablecida = $pruebaConexion->abrir();
-echo "Conexión realizada correctamente";
-
-$pruebaConexion->cerrar($conexionEstablecida);
+try {
+    $conexionEstablecida = $pruebaConexion->abrir();
+    echo "Conexion realizada correctamente";
+    $pruebaConexion->cerrar($conexionEstablecida);
+} catch (Exception $e) {
+    echo $e->getMessage();
+}
