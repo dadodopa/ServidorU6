@@ -58,7 +58,7 @@
                             <th><?php echo $fila["telefono"] ?></th>
                             <th><?php echo $fila["puesto"] ?></th>
                             <th><?php echo $fila["estado"] ?></th>
-                            <th>Acciones</th>
+                            <th><a href="./profile.php?cod=<?php echo $fila['codigo']?>">Ver</a>/ <a href="./edit.php?cod=<?php echo $fila['codigo']?>">Editar</a></th>
                         </tr>
 
                     <?php
