@@ -56,18 +56,31 @@ include("conexion.php");
                     $errores[] = "Nombre inválido";
                 }
                 //con el siguiente if comprobamos que la variable de estado sea entre una de las cadenas que tenemos en una array llamada estados_validos
-                $estados_validos = ["Fijo", "Contratado", "Externo"];
+                $estados_validos = [1, 2, 3];
                 if (!in_array($estado, $estados_validos)) {
                     $errores[] = "Estado incorrecto";
                 }
 
                 //Comprobamos si existe algún empleado con el mismo código en la base de datos
                 if (empty($errores)) {
-                    $conexion = new mysqli($db_host = "localhost", $db_user = "root", $db_pass = "", $db_name = "crud02_empleados");
-                    
+                    $sql="SELECT codigo FROM empleados WHERE";
+                    $stmt=$con->prepare($sql);
+                    $stmt->bind_param("i",$codigo);
+                    $stmt->execute();
+                    $resultado = $stmt->get_result();
+                    $errores="";
+                    if($resultado->fetch_assoc()){
+                        $errores= "Ya existe un empleado con ese código";
+                    }                    
+                } else{
+                    echo $errores;
                 }
                 //Si existe mostramos un aviso al usuario
-
+                if(empty($errores)) {
+                    $sql= "INSERT INTO empleados (nombres, lugar_nacimiento, direccion, telefono, puesto, estado)
+                            VALUES '$nombres', '$lugar_nacimiento', '$direccion', '$telefono', '$puesto', '$estado'";
+                    $con->query($consulta);
+                }
                 //Si no existe añadimos al empleado
 
 
