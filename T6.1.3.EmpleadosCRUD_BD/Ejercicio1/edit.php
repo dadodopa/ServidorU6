@@ -26,7 +26,7 @@ include("conexion.php");
             <div class="contenido">
                 <h2>Datos del empleados &raquo; Editar datos</h2>
                 <hr />
-                <h3>PÁGINA EN CONSTRUCCIÓN</h3>
+                <h3>PÁGINA EN CONSTRUCCIÓN - Road work ahead. Yeah I sure hope it does</h3>
                 
             </div>
         </div>
